@@ -1,0 +1,4 @@
+{
+    "heading": "Move the Checkers",
+    "description": "We consider a row of six alternating checkers so that a white stone is always followed by a black one. To the right of this arrangement there is sufficient empty space for four checkers. At any turn, two consecutive checkers can be moved at the same time to two consecutive empty spaces without changing their order. In the end, all six checker shall form a new uninterrupted row within which now all black checkers and all white checkers respectively are placed together in a group. Find a solution in three moves!"
+}
