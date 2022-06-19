@@ -19,7 +19,8 @@
 	const height = rows * offset * 2;
 
 	onMount(() => {
-		document.addEventListener('pointerlockchange', pointerLockChange, false);
+		document.addEventListener('pointerlockchange', pointerLockChange);
+		document.addEventListener('pointerlockerror', resetDraggingState);
 		render();
 	});
 
@@ -195,23 +196,27 @@
 		}
 	}
 
+	function resetDraggingState() {
+		isDragging = false;
+		state.forEach((row, j) => {
+			row.forEach((s, i) => {
+				switch (s) {
+					case 'a':
+						state[j][i] = 'b';
+						break;
+					case 'v':
+						state[j][i] = 'w';
+						break;
+				}
+			});
+		});
+	}
+
 	function pointerLockChange() {
 		if (canvas && document.pointerLockElement === canvas) {
 			isDragging = true;
 		} else if (isDragging) {
-			isDragging = false;
-			state.forEach((row, j) => {
-				row.forEach((s, i) => {
-					switch (s) {
-						case 'a':
-							state[j][i] = 'b';
-							break;
-						case 'v':
-							state[j][i] = 'w';
-							break;
-					}
-				});
-			});
+			resetDraggingState();
 			render();
 		}
 	}
