@@ -9,14 +9,14 @@
 	let drag = [0, 0];
 	let isDragging = false;
 
-	let radius = 30;
-
-	const padding = 6;
-	const offset = radius + padding;
+	const base_radius = 30;
+	const base_padding = 6;
+	const base_half_grid = base_radius + base_padding;
+	const base_grid = base_half_grid * 2;
 	const rows = 4;
 
-	const width = state[0].length * offset * 2;
-	const height = rows * offset * 2;
+	const base_width = state[0].length * base_grid;
+	const base_height = rows * base_grid;
 
 	onMount(() => {
 		render();
@@ -39,42 +39,64 @@
 	/**
 	 * @param {number} pos
 	 */
-	function toPixels(pos) {
-		return (pos * 2 + 1) * offset;
+	function posToBaseUnits(pos) {
+		return (pos * 2 + 1) * base_half_grid;
+	}
+
+	function getCssToBaseScale() {
+		if (!canvas || !window) {
+			return 1;
+		}
+		const css_width = parseInt(window.getComputedStyle(canvas).width);
+		return css_width / base_width;
 	}
 
 	/**
 	 * @param {number} px
 	 */
-	function toPosition(px) {
-		return Math.trunc(px / (2 * offset));
+	function cssToBaseUnits(px) {
+		return px / getCssToBaseScale();
 	}
 
-	function render() {
-		if (!canvas) {
+	/**
+	 * @param {number} base
+	 */
+	function toPosition(base) {
+		return Math.trunc(base / base_grid);
+	}
+
+	function render(offsetX = 0, offsetY = 0) {
+		if (!canvas || !window) {
 			return;
 		}
+
+		const scale = getCssToBaseScale() * window.devicePixelRatio;
+
+		canvas.width = base_width * scale;
+		canvas.height = base_height * scale;
+
 		const ctx = canvas.getContext('2d');
 		if (!ctx) {
 			console.error('Could not getContext of canvas.');
 			return;
 		}
-		ctx.clearRect(0, 0, width, height);
+		ctx.setTransform(scale, 0, 0, scale, 0, 0);
+		ctx.clearRect(0, 0, base_width, base_height);
 		for (let k = 1; k < rows; k++) {
 			ctx.beginPath();
-			ctx.moveTo(9, k * offset * 2);
-			ctx.lineTo(width - padding, k * offset * 2);
+			ctx.moveTo(base_padding, k * base_grid);
+			ctx.lineTo(base_width - base_padding, k * base_grid);
 			ctx.stroke();
 		}
 
 		let dragIdx = 0;
 		state.forEach((row, j) => {
 			row.forEach((s, i) => {
-				let x = toPixels(i);
-				let y = toPixels(j);
+				let x = posToBaseUnits(i);
+				let y = posToBaseUnits(j);
 				let tone = 0;
 				let alpha = 1;
-				let r = radius;
+				let r = base_radius;
 
 				if (s === 'w' || s === 'v' || s === 'x') {
 					tone = 255;
@@ -82,8 +104,8 @@
 
 				if (isDraggingState(s)) {
 					alpha = 0.5;
-					x = drag[0] + dragIdx * offset * 2;
-					y = drag[1];
+					x = cssToBaseUnits(offsetX) + drag[0] + dragIdx * base_grid;
+					y = cssToBaseUnits(offsetY) + drag[1];
 					dragIdx = dragIdx + 1;
 				}
 
@@ -107,12 +129,12 @@
 		if (state.length === rows) {
 			return;
 		}
-		let j = toPosition(event.offsetY);
+		let j = toPosition(cssToBaseUnits(event.offsetY));
 		if (j != state.length - 1) {
 			return;
 		}
 
-		let i = toPosition(event.offsetX);
+		let i = toPosition(cssToBaseUnits(event.offsetX));
 		if (!isRegularState(state[j][i])) {
 			return;
 		}
@@ -137,8 +159,8 @@
 			}
 		}
 
-		drag[0] = toPixels(i);
-		drag[1] = toPixels(j);
+		drag[0] = posToBaseUnits(i) - cssToBaseUnits(event.offsetX);
+		drag[1] = posToBaseUnits(j) - cssToBaseUnits(event.offsetY);
 
 		// @ts-ignore
 		canvas.setPointerCapture(event.pointerId);
@@ -150,9 +172,7 @@
 	 */
 	function pointerMove(event) {
 		if (isDragging) {
-			drag[0] += event.movementX;
-			drag[1] += event.movementY;
-			render();
+			render(event.offsetX, event.offsetY);
 		}
 	}
 
@@ -161,12 +181,12 @@
 	 */
 	function pointerUp(event) {
 		if (isDragging) {
-			const j = toPosition(drag[1]);
+			const j = toPosition(drag[1] + cssToBaseUnits(event.offsetY));
 			if (j != state.length - 1) {
 				return;
 			}
 
-			const i = toPosition(drag[0]);
+			const i = toPosition(drag[0] + cssToBaseUnits(event.offsetX));
 			if (i < 0 || i > state[0].length - 2) {
 				return;
 			}
@@ -209,10 +229,8 @@
 </script>
 
 <canvas
-	class="border-2"
+	class="border-2 w-full lg:w-4/5 xl:w-2/3"
 	class:cursor-move={isDragging}
-	{width}
-	{height}
 	bind:this={canvas}
 	on:pointerdown={pointerDown}
 	on:pointermove={pointerMove}
