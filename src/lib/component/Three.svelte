@@ -19,8 +19,6 @@
 	const height = rows * offset * 2;
 
 	onMount(() => {
-		document.addEventListener('pointerlockchange', pointerLockChange);
-		document.addEventListener('pointerlockerror', resetDraggingState);
 		render();
 	});
 
@@ -103,9 +101,9 @@
 	}
 
 	/**
-	 * @param {MouseEvent} event
+	 * @param {PointerEvent} event
 	 */
-	function mouseDown(event) {
+	function pointerDown(event) {
 		if (state.length === rows) {
 			return;
 		}
@@ -143,13 +141,14 @@
 		drag[1] = toPixels(j);
 
 		// @ts-ignore
-		canvas.requestPointerLock();
+		canvas.setPointerCapture(event.pointerId);
+		isDragging = true;
 	}
 
 	/**
-	 * @param {MouseEvent} event
+	 * @param {PointerEvent} event
 	 */
-	function mouseMove(event) {
+	function pointerMove(event) {
 		if (isDragging) {
 			drag[0] += event.movementX;
 			drag[1] += event.movementY;
@@ -158,31 +157,28 @@
 	}
 
 	/**
-	 * @param {MouseEvent} event
+	 * @param {PointerEvent} event
 	 */
-	function mouseUp(event) {
+	function pointerUp(event) {
 		if (isDragging) {
-			let j = toPosition(drag[1]);
+			const j = toPosition(drag[1]);
 			if (j != state.length - 1) {
-				document.exitPointerLock();
 				return;
 			}
 
-			let i = toPosition(drag[0]);
-			if (i > state[0].length - 2) {
-				document.exitPointerLock();
+			const i = toPosition(drag[0]);
+			if (i < 0 || i > state[0].length - 2) {
 				return;
 			}
 
 			if (state[j][i] != 'x' || state[j][i + 1] != 'x') {
-				document.exitPointerLock();
 				return;
 			}
 
 			for (let k = 0; k < state[0].length; k++) {
-				let oldRow = state[state.length - 1];
+				const oldRow = state[state.length - 1];
 				if (isDraggingState(oldRow[k])) {
-					let newRow = [...oldRow];
+					const newRow = [...oldRow];
 					for (let dragIdx = 0; dragIdx < 2; dragIdx++) {
 						newRow[i + dragIdx] = newRow[k + dragIdx];
 						newRow[k + dragIdx] = 'x';
@@ -191,8 +187,6 @@
 					break;
 				}
 			}
-
-			document.exitPointerLock();
 		}
 	}
 
@@ -210,24 +204,18 @@
 				}
 			});
 		});
-	}
-
-	function pointerLockChange() {
-		if (canvas && document.pointerLockElement === canvas) {
-			isDragging = true;
-		} else if (isDragging) {
-			resetDraggingState();
-			render();
-		}
+		render();
 	}
 </script>
 
 <canvas
 	class="border-2"
+	class:cursor-move={isDragging}
 	{width}
 	{height}
 	bind:this={canvas}
-	on:mousedown={mouseDown}
-	on:mousemove={mouseMove}
-	on:mouseup={mouseUp}
+	on:pointerdown={pointerDown}
+	on:pointermove={pointerMove}
+	on:pointerup={pointerUp}
+	on:lostpointercapture={resetDraggingState}
 />
