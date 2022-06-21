@@ -5,7 +5,20 @@
 	 */
 	let canvas;
 
-	let state = [['w', 'b', 'w', 'b', 'w', 'b', 'x', 'x', 'x', 'x']];
+	/**
+	 * @type {string[][]}
+	 */
+	export let state;
+	/**
+	 * @type {number}
+	 */
+	export let rows;
+
+	/**
+	 * @type {string[]}
+	 */
+	export let win_state;
+
 	let drag = [0, 0];
 	let isDragging = false;
 
@@ -13,14 +26,29 @@
 	const base_padding = 6;
 	const base_half_grid = base_radius + base_padding;
 	const base_grid = base_half_grid * 2;
-	const rows = 4;
 
 	const base_width = state[0].length * base_grid;
 	const base_height = rows * base_grid;
 
+	let game_over = false;
+
 	onMount(() => {
 		render();
 	});
+
+	function checkWin() {
+		game_over = state.length === rows;
+		if (game_over) {
+			let won = true;
+			for (let k = 0; k < win_state.length; k++) {
+				if (state[state.length - 1][k] !== win_state[k]) {
+					won = false;
+					break;
+				}
+			}
+			console.log(won);
+		}
+	}
 
 	/**
 	 * @param {string} state
@@ -34,6 +62,20 @@
 	 */
 	function isDraggingState(state) {
 		return state === 'a' || state === 'v';
+	}
+
+	/**
+	 * @param {string} draggingState
+	 */
+	function toRegularState(draggingState) {
+		switch (draggingState) {
+			case 'a':
+				return 'b';
+			case 'v':
+				return 'w';
+			default:
+				return draggingState;
+		}
 	}
 
 	/**
@@ -200,10 +242,11 @@
 				if (isDraggingState(oldRow[k])) {
 					const newRow = [...oldRow];
 					for (let dragIdx = 0; dragIdx < 2; dragIdx++) {
-						newRow[i + dragIdx] = newRow[k + dragIdx];
+						newRow[i + dragIdx] = toRegularState(newRow[k + dragIdx]);
 						newRow[k + dragIdx] = 'x';
 					}
-					state.push(newRow);
+					state = [...state, newRow];
+					checkWin();
 					break;
 				}
 			}
@@ -214,13 +257,8 @@
 		isDragging = false;
 		state.forEach((row, j) => {
 			row.forEach((s, i) => {
-				switch (s) {
-					case 'a':
-						state[j][i] = 'b';
-						break;
-					case 'v':
-						state[j][i] = 'w';
-						break;
+				if (isDraggingState(s)) {
+					state[j][i] = toRegularState(s);
 				}
 			});
 		});

@@ -1,0 +1,3 @@
+{
+    "description": "We consider a row of eight checkers: four black ones and four white ones. To the right of this arrangement there is sufficient empty space for two checkers. This gives us a total of ten possible positions for the checkers. At any turn, two consecutive checkers can be moved — at the same time and without changing their order — to two consecutive empty spaces. The goal is to rearrange the checkers so that white checkers and black checkers are alternating. All eight checkers shall still form an uninterrupted row, potentially occupying previously empty spaces but not leaving empty spaces between checkers in the end. Find a solution in four moves!"
+}

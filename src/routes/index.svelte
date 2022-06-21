@@ -1,7 +1,7 @@
 <script>
 	import { t } from '$lib/translations';
 
-	const route_names = ['three'];
+	const route_names = ['three', 'threeb'];
 </script>
 
 <h2 class="text-3xl font-semibold m-2">{$t('common.menu.toc')}</h2>

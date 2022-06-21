@@ -33,6 +33,22 @@ const config = ({
                 await import('./de/three.json')
             ).default,
         },
+        {
+            locale: 'en',
+            key: 'threeb',
+            routes: ['/threeb'],
+            loader: async () => (
+                await import('./en/threeb.json')
+            ).default,
+        },
+        {
+            locale: 'de',
+            key: 'threeb',
+            routes: ['/threeb'],
+            loader: async () => (
+                await import('./de/threeb.json')
+            ).default,
+        },
     ],
 });
 

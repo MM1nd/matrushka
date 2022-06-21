@@ -1,0 +1,3 @@
+{
+    "description": "Wir betrachten eine Reihe von acht Damesteinen, vier schwarze und vier weiße. Rechts davon ist freier Platz, der für zwei Steine ausreicht. Somit haben wir insgesamt zehn mögliche Positionen für die Damesteine. In einem Zug dürfen zwei nebeneinanderliegende Steine gleichzeitig auf zwei nebeneinanderliegende freie Plätze verschoben werden, ohne ihre Reihenfolge zu verändern. Das Ziel ist es, die Damesteine so zu arrangieren, dass sich jeweils ein weißer Stein und ein schwarzer Stein abwechseln. Alle acht Damesteine sollen weiterhin eine zusammenhängende Reihe bilden. Anfangs freie Plätze dürfen verwendet werden, aber es darf am Ende kein freier Platz zwischen den Steinen verbleiben. Finde eine Lösung in vier Zügen!"
+}
