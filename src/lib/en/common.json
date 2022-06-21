@@ -1,6 +1,10 @@
 {
     "menu": {
         "settings": "Settings",
-        "lang": "Language"
+        "lang": "Language",
+        "toc": "Table of Content"
+    },
+    "headings": {
+        "three": "Move the Checkers"
     }
 }

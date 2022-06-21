@@ -6,6 +6,6 @@
 
 <Challenge
 	interactive={Three}
-	heading={$t('three.heading')}
+	heading={$t('common.headings.three')}
 	description={$t('three.description')}
 />

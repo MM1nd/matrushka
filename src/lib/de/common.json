@@ -1,6 +1,10 @@
 {
     "menu": {
         "settings": "Einstellungen",
-        "lang": "Sprache"
+        "lang": "Sprache",
+        "toc": "Inhaltsverzeichnis"
+    },
+    "headings": {
+        "three": "Verschiebe die Damesteine"
     }
 }
