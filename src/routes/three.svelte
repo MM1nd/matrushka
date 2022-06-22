@@ -4,7 +4,7 @@
 	import { t } from '$lib/translations';
 
 	const interactive_params = {
-		state: [['w', 'b', 'w', 'b', 'w', 'b', 'x', 'x', 'x', 'x']],
+		start_state: ['w', 'b', 'w', 'b', 'w', 'b', 'x', 'x', 'x', 'x'],
 		rows: 4,
 		win_state: ['x', 'x', 'x', 'x', 'b', 'b', 'b', 'w', 'w', 'w']
 	};

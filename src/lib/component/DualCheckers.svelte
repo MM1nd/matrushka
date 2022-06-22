@@ -1,14 +1,12 @@
 <script>
 	import { onMount } from 'svelte';
+	import { t } from '$lib/translations';
+
 	/**
 	 * @type {HTMLCanvasElement | null}
 	 */
 	let canvas;
 
-	/**
-	 * @type {string[][]}
-	 */
-	export let state;
 	/**
 	 * @type {number}
 	 */
@@ -17,7 +15,14 @@
 	/**
 	 * @type {string[]}
 	 */
+	export let start_state;
+
+	/**
+	 * @type {string[]}
+	 */
 	export let win_state;
+
+	let state = [start_state];
 
 	let drag = [0, 0];
 	let isDragging = false;
@@ -31,6 +36,7 @@
 	const base_height = rows * base_grid;
 
 	let game_over = false;
+	let won = true;
 
 	onMount(() => {
 		render();
@@ -39,7 +45,6 @@
 	function checkWin() {
 		game_over = state.length === rows;
 		if (game_over) {
-			let won = true;
 			for (let k = 0; k < win_state.length; k++) {
 				if (state[state.length - 1][k] !== win_state[k]) {
 					won = false;
@@ -48,6 +53,14 @@
 			}
 			console.log(won);
 		}
+	}
+
+	function reset() {
+		game_over = false;
+		won = true;
+		isDragging = false;
+		state = [start_state];
+		render();
 	}
 
 	/**
@@ -266,12 +279,28 @@
 	}
 </script>
 
-<canvas
-	class="border-2 w-full lg:w-4/5 xl:w-2/3"
-	class:cursor-move={isDragging}
-	bind:this={canvas}
-	on:pointerdown={pointerDown}
-	on:pointermove={pointerMove}
-	on:pointerup={pointerUp}
-	on:lostpointercapture={resetDraggingState}
-/>
+<div class="flex flex-col lg:flex-row bg-rose-700">
+	<div class="basis-4/5 bg-white m-2">
+		<canvas
+			class="w-full"
+			class:cursor-move={isDragging}
+			bind:this={canvas}
+			on:pointerdown={pointerDown}
+			on:pointermove={pointerMove}
+			on:pointerup={pointerUp}
+			on:lostpointercapture={resetDraggingState}
+		/>
+	</div>
+	<div class="basis-1/5 bg-white m-2">
+		<div class="bg-rose-50 m-2">
+			<button type="button" class="w-full p-1" on:click={reset}>{$t('common.game.reset')}</button>
+		</div>
+		<div class="m-2">
+			<p>
+				{$t(
+					game_over ? (won ? 'common.game.solved' : 'common.game.over') : 'common.game.player_turn'
+				)}
+			</p>
+		</div>
+	</div>
+</div>
