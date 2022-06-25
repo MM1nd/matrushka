@@ -51,7 +51,6 @@
 					break;
 				}
 			}
-			console.log(won);
 		}
 	}
 

@@ -6,7 +6,8 @@
     },
     "headings": {
         "three": "Move the Checkers",
-        "threeb": "Move the Checkers … again"
+        "threeb": "Move the Checkers … again",
+        "threec": "Move the Checkers … Redux"
     },
     "game": {
         "player_turn": "Make your move.",

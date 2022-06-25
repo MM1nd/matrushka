@@ -6,7 +6,8 @@
     },
     "headings": {
         "three": "Verschiebe die Damesteine",
-        "threeb": "Verschiebe die Damesteine … nochmal"
+        "threeb": "Verschiebe die Damesteine … nochmal",
+        "threec": "Verschiebe die Damesteine … Redux"
     },
     "game": {
         "player_turn": "Du bist am Zug.",
