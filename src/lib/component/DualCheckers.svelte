@@ -1,6 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import { t } from '$lib/translations';
+	import {
+		_render,
+		posToBaseUnits,
+		isDraggingState,
+		baseUnitsToPosition,
+		createGeometry
+	} from '$lib/canvas/dual_checkers';
 
 	/**
 	 * @type {HTMLCanvasElement | null}
@@ -27,13 +34,7 @@
 	let drag = [0, 0];
 	let isDragging = false;
 
-	const base_radius = 30;
-	const base_padding = 6;
-	const base_half_grid = base_radius + base_padding;
-	const base_grid = base_half_grid * 2;
-
-	const base_width = state[0].length * base_grid;
-	const base_height = rows * base_grid;
+	const geometry = createGeometry(rows, state[0].length, 6, 30);
 
 	let game_over = false;
 	let won = true;
@@ -70,13 +71,6 @@
 	}
 
 	/**
-	 * @param {string} state
-	 */
-	function isDraggingState(state) {
-		return state === 'a' || state === 'v';
-	}
-
-	/**
 	 * @param {string} draggingState
 	 */
 	function toRegularState(draggingState) {
@@ -90,19 +84,12 @@
 		}
 	}
 
-	/**
-	 * @param {number} pos
-	 */
-	function posToBaseUnits(pos) {
-		return (pos * 2 + 1) * base_half_grid;
-	}
-
 	function getCssToBaseScale() {
 		if (!canvas || !window) {
 			return 1;
 		}
 		const css_width = parseInt(window.getComputedStyle(canvas).width);
-		return css_width / base_width;
+		return css_width / geometry.width;
 	}
 
 	/**
@@ -112,13 +99,6 @@
 		return px / getCssToBaseScale();
 	}
 
-	/**
-	 * @param {number} base
-	 */
-	function toPosition(base) {
-		return Math.trunc(base / base_grid);
-	}
-
 	function render(offsetX = 0, offsetY = 0) {
 		if (!canvas || !window) {
 			return;
@@ -126,54 +106,14 @@
 
 		const scale = getCssToBaseScale() * window.devicePixelRatio;
 
-		canvas.width = base_width * scale;
-		canvas.height = base_height * scale;
-
-		const ctx = canvas.getContext('2d');
-		if (!ctx) {
-			console.error('Could not getContext of canvas.');
-			return;
-		}
-		ctx.setTransform(scale, 0, 0, scale, 0, 0);
-		ctx.clearRect(0, 0, base_width, base_height);
-		for (let k = 1; k < rows; k++) {
-			ctx.beginPath();
-			ctx.moveTo(base_padding, k * base_grid);
-			ctx.lineTo(base_width - base_padding, k * base_grid);
-			ctx.stroke();
-		}
-
-		let dragIdx = 0;
-		state.forEach((row, j) => {
-			row.forEach((s, i) => {
-				let x = posToBaseUnits(i);
-				let y = posToBaseUnits(j);
-				let tone = 0;
-				let alpha = 1;
-				let r = base_radius;
-
-				if (s === 'w' || s === 'v' || s === 'x') {
-					tone = 255;
-				}
-
-				if (isDraggingState(s)) {
-					alpha = 0.5;
-					x = cssToBaseUnits(offsetX) + drag[0] + dragIdx * base_grid;
-					y = cssToBaseUnits(offsetY) + drag[1];
-					dragIdx = dragIdx + 1;
-				}
-
-				if (s === 'x') {
-					r = r / 5;
-				}
-
-				ctx.fillStyle = `rgba(${tone}, ${tone}, ${tone}, ${alpha}`;
-				ctx.beginPath();
-				ctx.ellipse(x, y, r, r, 0, 0, 2 * Math.PI);
-				ctx.fill();
-				ctx.stroke();
-			});
-		});
+		_render(
+			canvas,
+			scale,
+			state,
+			geometry,
+			drag[0] + cssToBaseUnits(offsetX),
+			drag[1] + cssToBaseUnits(offsetY)
+		);
 	}
 
 	/**
@@ -183,12 +123,12 @@
 		if (state.length === rows) {
 			return;
 		}
-		let j = toPosition(cssToBaseUnits(event.offsetY));
+		let j = baseUnitsToPosition(cssToBaseUnits(event.offsetY), geometry);
 		if (j != state.length - 1) {
 			return;
 		}
 
-		let i = toPosition(cssToBaseUnits(event.offsetX));
+		let i = baseUnitsToPosition(cssToBaseUnits(event.offsetX), geometry);
 		if (!isRegularState(state[j][i])) {
 			return;
 		}
@@ -213,8 +153,8 @@
 			}
 		}
 
-		drag[0] = posToBaseUnits(i) - cssToBaseUnits(event.offsetX);
-		drag[1] = posToBaseUnits(j) - cssToBaseUnits(event.offsetY);
+		drag[0] = posToBaseUnits(i, geometry) - cssToBaseUnits(event.offsetX);
+		drag[1] = posToBaseUnits(j, geometry) - cssToBaseUnits(event.offsetY);
 
 		// @ts-ignore
 		canvas.setPointerCapture(event.pointerId);
@@ -235,12 +175,12 @@
 	 */
 	function pointerUp(event) {
 		if (isDragging) {
-			const j = toPosition(drag[1] + cssToBaseUnits(event.offsetY));
+			const j = baseUnitsToPosition(drag[1] + cssToBaseUnits(event.offsetY), geometry);
 			if (j != state.length - 1) {
 				return;
 			}
 
-			const i = toPosition(drag[0] + cssToBaseUnits(event.offsetX));
+			const i = baseUnitsToPosition(drag[0] + cssToBaseUnits(event.offsetX), geometry);
 			if (i < 0 || i > state[0].length - 2) {
 				return;
 			}
