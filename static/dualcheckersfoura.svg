@@ -1,0 +1,136 @@
+<svg width="491pt" height="260pt" viewBox="0.00 0.00 490.59 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<title>G</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-256 486.5862,-256 486.5862,4 -4,4"/>
+<!-- bwbwxx -->
+<g id="node1" class="node">
+<title>bwbwxx</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="257.2931" cy="-234" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="257.2931" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">bwbwxx</text>
+</g>
+<!-- xxbwbw -->
+<g id="node2" class="node">
+<title>xxbwbw</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="259.2931" cy="-18" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="259.2931" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">xxbwbw</text>
+</g>
+<!-- bwbwxx&#45;&#45;xxbwbw -->
+<g id="edge4" class="edge">
+<title>bwbwxx--xxbwbw</title>
+<path fill="none" stroke="#000000" d="M257.4602,-215.9555C257.8366,-175.2967 258.7477,-76.8988 259.1251,-36.1451"/>
+</g>
+<!-- bxxwwb -->
+<g id="node4" class="node">
+<title>bxxwwb</title>
+<ellipse fill="none" stroke="#000000" cx="149.2931" cy="-162" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="149.2931" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">bxxwwb</text>
+</g>
+<!-- bwbwxx&#45;&#45;bxxwwb -->
+<g id="edge1" class="edge">
+<title>bwbwxx--bxxwwb</title>
+<path fill="none" stroke="#000000" d="M234.1244,-218.5542C215.9022,-206.406 190.6358,-189.5618 172.4235,-177.4203"/>
+</g>
+<!-- bwxbwx -->
+<g id="node5" class="node">
+<title>bwxbwx</title>
+<ellipse fill="none" stroke="#000000" cx="438.2931" cy="-90" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="438.2931" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">bwxbwx</text>
+</g>
+<!-- bwbwxx&#45;&#45;bwxbwx -->
+<g id="edge2" class="edge">
+<title>bwbwxx--bwxbwx</title>
+<path fill="none" stroke="#000000" d="M290.1111,-221.9032C312.6839,-212.5947 342.5713,-198.2424 365.2931,-180 391.3354,-159.0917 414.2985,-127.4564 427.2257,-107.7971"/>
+</g>
+<!-- bwxxbw -->
+<g id="node6" class="node">
+<title>bwxxbw</title>
+<ellipse fill="none" stroke="#000000" cx="312.2931" cy="-162" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="312.2931" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">bwxxbw</text>
+</g>
+<!-- bwbwxx&#45;&#45;bwxxbw -->
+<g id="edge3" class="edge">
+<title>bwbwxx--bwxxbw</title>
+<path fill="none" stroke="#000000" d="M270.6071,-216.5708C279.2544,-205.2506 290.4789,-190.5568 299.1017,-179.2687"/>
+</g>
+<!-- xxwbwb -->
+<g id="node3" class="node">
+<title>xxwbwb</title>
+<ellipse fill="#d3d3d3" stroke="#000000" cx="44.2931" cy="-18" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="44.2931" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">xxwbwb</text>
+</g>
+<!-- bwwxxb -->
+<g id="node7" class="node">
+<title>bwwxxb</title>
+<ellipse fill="none" stroke="#000000" cx="79.2931" cy="-90" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="79.2931" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">bwwxxb</text>
+</g>
+<!-- bxxwwb&#45;&#45;bwwxxb -->
+<g id="edge5" class="edge">
+<title>bxxwwb--bwwxxb</title>
+<path fill="none" stroke="#000000" d="M132.7041,-144.937C121.5455,-133.4596 106.8967,-118.3922 95.763,-106.9405"/>
+</g>
+<!-- bxwwxb -->
+<g id="node8" class="node">
+<title>bxwwxb</title>
+<ellipse fill="none" stroke="#000000" cx="151.2931" cy="-18" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="151.2931" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">bxwwxb</text>
+</g>
+<!-- bxxwwb&#45;&#45;bxwwxb -->
+<g id="edge6" class="edge">
+<title>bxxwwb--bxwwxb</title>
+<path fill="none" stroke="#000000" d="M149.5464,-143.7623C149.9311,-116.0633 150.6584,-63.7005 151.0418,-36.0896"/>
+</g>
+<!-- xbwbwx -->
+<g id="node9" class="node">
+<title>xbwbwx</title>
+<ellipse fill="none" stroke="#000000" cx="402.2931" cy="-18" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="402.2931" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">xbwbwx</text>
+</g>
+<!-- bwxbwx&#45;&#45;xbwbwx -->
+<g id="edge10" class="edge">
+<title>bwxbwx--xbwbwx</title>
+<path fill="none" stroke="#000000" d="M429.3942,-72.2022C423.8557,-61.1252 416.7571,-46.928 411.2144,-35.8425"/>
+</g>
+<!-- bwxxbw&#45;&#45;xxbwbw -->
+<g id="edge13" class="edge">
+<title>bwxxbw--xxbwbw</title>
+<path fill="none" stroke="#000000" d="M298.9502,-144.3757C291.8537,-134.2207 283.5354,-120.9372 278.2931,-108 268.6375,-84.1712 263.6119,-54.7175 261.2116,-36.1388"/>
+</g>
+<!-- bwxxbw&#45;&#45;bwxbwx -->
+<g id="edge9" class="edge">
+<title>bwxxbw--bwxbwx</title>
+<path fill="none" stroke="#000000" d="M338.0951,-147.256C359.8385,-134.8312 390.7919,-117.1435 412.5256,-104.7243"/>
+</g>
+<!-- xbwxbw -->
+<g id="node10" class="node">
+<title>xbwxbw</title>
+<ellipse fill="none" stroke="#000000" cx="331.2931" cy="-90" rx="44.0871" ry="18"/>
+<text text-anchor="middle" x="331.2931" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">xbwxbw</text>
+</g>
+<!-- bwxxbw&#45;&#45;xbwxbw -->
+<g id="edge12" class="edge">
+<title>bwxxbw--xbwxbw</title>
+<path fill="none" stroke="#000000" d="M317.0876,-143.8314C319.9898,-132.8334 323.6759,-118.865 326.5659,-107.9134"/>
+</g>
+<!-- bwwxxb&#45;&#45;xxwbwb -->
+<g id="edge7" class="edge">
+<title>bwwxxb--xxwbwb</title>
+<path fill="none" stroke="#000000" d="M70.6414,-72.2022C65.2567,-61.1252 58.3553,-46.928 52.9666,-35.8425"/>
+</g>
+<!-- bwwxxb&#45;&#45;bxwwxb -->
+<g id="edge8" class="edge">
+<title>bwwxxb--bxwwxb</title>
+<path fill="none" stroke="#000000" d="M95.9923,-73.3008C107.4579,-61.8352 122.6319,-46.6612 134.1845,-35.1086"/>
+</g>
+<!-- xbwxbw&#45;&#45;xxbwbw -->
+<g id="edge11" class="edge">
+<title>xbwxbw--xxbwbw</title>
+<path fill="none" stroke="#000000" d="M314.5939,-73.3008C303.1283,-61.8352 287.9543,-46.6612 276.4017,-35.1086"/>
+</g>
+<!-- xbwxbw&#45;&#45;xbwbwx -->
+<g id="edge14" class="edge">
+<title>xbwxbw--xbwbwx</title>
+<path fill="none" stroke="#000000" d="M348.1191,-72.937C359.4371,-61.4596 374.2952,-46.3922 385.5879,-34.9405"/>
+</g>
+</g>
+</svg>

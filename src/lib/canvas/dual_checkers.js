@@ -158,7 +158,7 @@ function reachedGoal(s, count_b, count_w) {
  */
 function breadthFirstSearch(initial_state) {
     if (initial_state.length < 2) {
-        return [initial_state];
+        return [[initial_state]];
     }
 
     let count_b = 0;
@@ -174,7 +174,7 @@ function breadthFirstSearch(initial_state) {
     })
 
     if (count_b + count_w === 0) {
-        return [initial_state];
+        return [[initial_state]];
     }
 
     let q = [[initial_state]];
@@ -183,22 +183,30 @@ function breadthFirstSearch(initial_state) {
 
     let p;
 
+    let r = [];
+
     while ((p = q.shift()) !== undefined) {
+        if (r.length > 0 && p.length > r[0].length) {
+            return r;
+        }
+
         let s = p.at(-1);
 
         if (s === undefined) {
             console.error('We know that this can never happen but the typechecker does not understand it.');
-            return null;
+            return r;
         }
 
         if (reachedGoal(s, count_b, count_w)) {
-            return p;
+            r.push(p);
+            console.log(count_b + count_w);
+            console.log(v.size);
         }
 
         for (let i = 0; i < s.length - 1; i++) {
             if (s[i] !== 'x' && s[i + 1] !== 'x') {
                 for (let j = 0; j < s.length - 1; j++) {
-                    if (s[j] === 'x' && s[j + 1] === 'x' || s[j] === 'x' && j + 1 === i || j === i + 1 && s[j + 1] === 'x') {
+                    if (s[j] === 'x' && s[j + 1] === 'x') {
                         let new_s = [...s];
                         new_s[j] = s[i];
                         new_s[j + 1] = s[i + 1];
@@ -216,5 +224,5 @@ function breadthFirstSearch(initial_state) {
         }
     }
 
-    return null;
+    return r;
 }
